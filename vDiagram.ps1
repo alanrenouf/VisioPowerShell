@@ -1,21 +1,5 @@
 ﻿Param ($VIServer=$FALSE, $Cluster=$FALSE)
 
-#############################################################
-#															#
-#    vDiagram script by Alan Renouf - Virtu-Al				#
-#    Blog: http://teckinfo.blogspot.com/					#
-#															#
-#    Usage: vDiagram.ps1 -VIServer MYVISERVER				#
-#															#
-#    Optional paramater of -Cluster MYCLUSTER 				#
-#		                                                   #
-#
-# Shape file needs to be in 'My Documents\My Shapes' 		#
-# folder													#
-#															#
-# Set the $Savefile as the location you would like the file #
-# to be saved												#
-#############################################################
 $SaveFile = [system.Environment]::GetFolderPath('MyDocuments') + "\My_vDrawing.vsd"
 if ($VIServer -eq $FALSE) { $VIServer = Read-Host "Please enter a Virtual Center name or ESX Host to diagram:" }
 
@@ -69,7 +53,11 @@ $CluShp = $stnObj.Masters.Item("Cluster")
 
 If ((Get-Cluster) -ne $Null){
 
-	If ($Cluster -eq $FALSE){ $DrawItems = get-cluster }Else {$DrawItems = (Get-Cluster $Cluster)}
+	If ($Cluster -eq $FALSE){ 
+        $DrawItems = get-cluster 
+    }Else {
+        $DrawItems = (Get-Cluster $Cluster)
+    }
 	
 	$x = 0
 	$VCLocation = $DrawItems | Get-VMHost
